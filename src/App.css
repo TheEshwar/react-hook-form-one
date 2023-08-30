@@ -34,3 +34,9 @@ input[type="date"] {
 .form-control {
   margin-bottom: 20px;
 }
+
+.errorP{
+  color: red;
+  text-align: left;
+  font-size: 12px;
+}
