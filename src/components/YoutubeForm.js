@@ -4,10 +4,27 @@ import { DevTool } from '@hookform/devtools'
 
 function YoutubeForm() {
   const form = useForm({
-    defaultValues: {
-      username: "Eshwar",
-      email: "",
-      channel: ""
+    // ********** Static Default values **********
+    // defaultValues: {
+    //   username: "Eshwar",
+    //   email: "",
+    //   channel: ""
+    // }
+    defaultValues: async () => {
+      const result = await fetch('https://jsonplaceholder.typicode.com/users/2')
+      const data = await result.json()
+      console.log('data :- ', data);
+
+      return {
+        username: data.name,
+        email: data.email,
+        channel: "",
+        social: {
+          twitter: "",
+          facebook: ""
+        },
+        phoneNumbers: ["",""]
+      }
     }
   })
 
@@ -67,6 +84,31 @@ function YoutubeForm() {
               }
             })} />
             <p className='errorP'>{errors.channel?.message}</p>
+            </div>
+
+            <div className="form-control">
+              <label htmlFor="twitter">Twitter</label>
+              <input type="text" name="twitter" {...register("social.twitter")} />
+            </div>
+
+            <div className="form-control">
+              <label htmlFor="facebook">Facebook</label>
+              <input type="text" name="facebook" {...register("social.facebook")} />
+            </div>
+
+            <div className="form-control">
+              <label htmlFor="primary-phone">Primary Phone Number</label>
+              <input type="text" name="primary-phone" {...register("phoneNumbers[0]")} />
+            </div>
+
+            <div className="form-control">
+              <label htmlFor="secondary-phone">Secondary Phone Number</label>
+              <input type="text" name="secondary-phone" {...register("phoneNumbers[1]")} />
+            </div>
+
+            <div className="form-control">
+              <label htmlFor="third-phone">Third Phone Number</label>
+              <input type="text" name="third-phone" {...register("phoneNumbers[2]")} />
             </div>
 
             <button>Submit</button>
